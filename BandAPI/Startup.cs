@@ -51,8 +51,6 @@ namespace BandAPI
 
             services.AddScoped<IPropertyValidationService, PropertyValidationService>(); // Addding the validation of the requiring fields
 
-
-
             services.AddCors(setupActions => setupActions.AddPolicy("CorsPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -89,6 +87,8 @@ namespace BandAPI
             }
 
             // app.UseHttpsRedirection(); // only need this for https, we're currently working for HTTP only
+
+
 
             app.UseCors("CorsPolicy");
 

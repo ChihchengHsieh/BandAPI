@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace BandAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IPropertyMappingService _propertyMappingService;
         private readonly IPropertyValidationService _propertyValidationService;
+        private WebSocket _socket;
 
         public BandsController(IBandAlbumRepository bandAlbumRepository, IMapper mapper, IPropertyMappingService propertyMappingService, IPropertyValidationService propertyValidationService) // there's no reference, how can we add mapper here?
         {
@@ -52,7 +54,6 @@ namespace BandAPI.Controllers
             var previousPagePageLink = bandsFromRepo.HasPrevious ? CreateBandsUri(bandResourceParameters, UriType.PreviousPage) : null;
 
             var nextPageLink = bandsFromRepo.HasNext ? CreateBandsUri(bandResourceParameters, UriType.NextPage) : null;
-
 
             var metaData = new
             {
@@ -91,7 +92,6 @@ namespace BandAPI.Controllers
             // returning band
 
             var bandEntity = _mapper.Map<Band>(band);
-
             _bandAlbumRepository.AddBand(bandEntity); // After adding the BandEntity will get band ID
             await _bandAlbumRepository.Save();
             var bandToReturn = _mapper.Map<BandDto>(bandEntity);
@@ -119,6 +119,7 @@ namespace BandAPI.Controllers
             return Ok(_mapper.Map<BandDto>(bandFromRepo));
 
         }
+
 
         private string CreateBandsUri(BandResourceParameters bandResourceParameters, UriType uriType)
         {

@@ -120,8 +120,6 @@ namespace BandAPI.Services
 
         }
 
-
-
         // Get all Bands
         public async Task<IEnumerable<Band>> GetBands()
         {

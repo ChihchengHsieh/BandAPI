@@ -28,7 +28,6 @@ namespace BandAPI.Helpers
 
             foreach (var orderByClause in orderBySplit)
             {
-
                 var trimmedOrderBy = orderByClause.Trim();
                 var orderDesc = trimmedOrderBy.EndsWith(" desc");
                 var indexOfSpace = trimmedOrderBy.IndexOf(" ");
@@ -41,7 +40,6 @@ namespace BandAPI.Helpers
 
                 if (propertyMappingValue == null)
                     throw new ArgumentNullException(nameof(propertyMappingValue));
-
 
                 foreach (var destination in propertyMappingValue.DestinationProperties.Reverse())
                 {
